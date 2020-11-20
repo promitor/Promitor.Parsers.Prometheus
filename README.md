@@ -1,2 +1,2 @@
-# GitHub Template
-GitHub template for all my future GitHub repos
+# Promitor - Prometheus Parser
+Provides a parser to translate Prometheus metrics into typed objects.
