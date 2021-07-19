@@ -36,7 +36,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore src/Promitor.Parsers.Prometheus.sln
     - name: Build
-      run: dotnet build src/Promitor.Parsers.Prometheus.sln --no-restore --configuration Release
+      run: dotnet build src/Promitor.Parsers.Prometheus.sln --no-restore --configuration Release -p:Version=${{ env.NUGET_PACKAGE_VERSION }}-$VERSION_SUFFIX
     - name: Test
       run: dotnet test src/Promitor.Parsers.Prometheus.Tests/Promitor.Parsers.Prometheus.Tests.csproj --no-build --verbosity normal --configuration Release
     - name: Push NuGet package
