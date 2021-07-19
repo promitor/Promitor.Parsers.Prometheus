@@ -1,4 +1,5 @@
 ﻿using Promitor.Parsers.Prometheus.Core.Models;
+using Promitor.Parsers.Prometheus.Core.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +13,7 @@ namespace Promitor.Parsers.Prometheus.Core
         const string MetricInfoRegex = @"# (\w+) (\w*) (.*)";
         const string MeasurementRegex = @"(.+){(.*)} (-?\d+(?:\.\d*)*) (\d*)";
 
-        public static async Task<List<Gauge>> ParseAsync(Stream rawMetricsStream)
+        public static async Task<List<IMetric>> ParseAsync(Stream rawMetricsStream)
         {
             var originalPosition = rawMetricsStream.Position;
 
@@ -34,9 +35,9 @@ namespace Promitor.Parsers.Prometheus.Core
             return metrics;
         }
 
-        private static async Task<List<Gauge>> InterpretRawMetricsStreamAsync(Stream rawMetricsStream)
+        private static async Task<List<IMetric>> InterpretRawMetricsStreamAsync(Stream rawMetricsStream)
         {
-            var metrics = new List<Gauge>();
+            var metrics = new List<IMetric>();
             var streamReader = new StreamReader(rawMetricsStream);
             
             Gauge unfinishedGauge = null;

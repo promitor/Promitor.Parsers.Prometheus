@@ -1,4 +1,6 @@
 ﻿using Promitor.Parsers.Prometheus.Core;
+using Promitor.Parsers.Prometheus.Core.Models;
+using Promitor.Parsers.Prometheus.Core.Models.Interfaces;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -27,12 +29,14 @@ namespace Promitor.Parsers.Prometheus.Tests
             AssertAzureContainerRegistryPullCount(metrics);
         }
 
-        private void AssertAzureContainerRegistryPullCount(List<Core.Models.Gauge> metrics)
+        private void AssertAzureContainerRegistryPullCount(List<IMetric> metrics)
         {
             var acrMetric = metrics.Find(f => f.Name == "azure_container_registry_total_pull_count_discovered");
             Assert.NotNull(acrMetric);
+            Assert.Equal(MetricTypes.Gauge, acrMetric.Type);
             Assert.Equal("Amount of images that were pulled from the container registry", acrMetric.Description);
-            Assert.Equal(2, acrMetric.Measurements.Count);
+            var acrGauge = acrMetric as Gauge;
+            Assert.Equal(2, acrGauge.Measurements.Count);
         }
     }
 }
