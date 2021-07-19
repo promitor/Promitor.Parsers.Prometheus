@@ -96,7 +96,7 @@ namespace Promitor.Parsers.Prometheus.Core
                 }
 
                 line = await streamReader.ReadLineAsync();
-            };
+            }
 
             return metrics;
         }
@@ -133,8 +133,7 @@ namespace Promitor.Parsers.Prometheus.Core
         }
 
         private static DateTimeOffset? ParseMetricTimestamp(Match regexOutcome)
-        {
-            
+        {            
             if (regexOutcome.Groups.Count < 5 || regexOutcome.Groups[4].Value == null)
             {
                 return null;
