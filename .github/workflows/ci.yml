@@ -9,16 +9,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet: [ '3.1.x', '5.0.x' ]
-    name: Build for .NET v${{ matrix.dotnet }}
+    name: Build & Test Code
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.x
+        dotnet-version: '3.1.x'
     - name: Restore dependencies
       run: dotnet restore src/Promitor.Parsers.Prometheus.sln
     - name: Build
