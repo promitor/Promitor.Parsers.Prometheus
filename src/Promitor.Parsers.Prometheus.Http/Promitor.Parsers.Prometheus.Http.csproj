@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Authors>Tom Kerkhove</Authors>
+    <Company>Promitor</Company>
+    <PackageLicenseFile></PackageLicenseFile>
+    <PackageProjectUrl>https://promitor.io/</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageIconUrl />
+    <RepositoryUrl>https://github.com/promitor/Promitor.Parsers.Prometheus</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>Prometheus</PackageTags>
+    <Description>Provides extensions to easily parse Prometheus metrics through HTTP.</Description>
+    <Copyright>2020 Tom Kerkhove</Copyright>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageId>Promitor.Parsers.Prometheus.Http</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\media\icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Promitor.Parsers.Prometheus.Core\Promitor.Parsers.Prometheus.Core.csproj" />
+  </ItemGroup>
+
+</Project>
