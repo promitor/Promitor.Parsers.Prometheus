@@ -45,18 +45,23 @@ namespace Promitor.Parsers.Prometheus.Core
             var wasReadingMeasurements = false;
             
             var line = await streamReader.ReadLineAsync();
-            while(rawMetricsStream.Position < rawMetricsStream.Length)
+            if (string.IsNullOrWhiteSpace(line))
             {
-                if(line.StartsWith("#"))
+                return metrics;
+            }
+
+            do
+            {
+                if (line.StartsWith("#"))
                 {
-                    if(wasReadingMeasurements == true)
+                    if (wasReadingMeasurements == true)
                     {
                         // We're done, starting to interpret the next gauge
                         metrics.Add(unfinishedGauge);
                         unfinishedGauge = null;
                     }
 
-                    if(unfinishedGauge == null)
+                    if (unfinishedGauge == null)
                     {
                         unfinishedGauge = new Gauge();
                     }
@@ -68,22 +73,22 @@ namespace Promitor.Parsers.Prometheus.Core
                     }
 
                     var scenario = metricInfoMatch.Groups[1].Value;
-                    switch(scenario)
+                    switch (scenario)
                     {
                         case "HELP":
                             unfinishedGauge.Description = metricInfoMatch.Groups[3].Value;
                             break;
                         case "TYPE":
                             unfinishedGauge.Name = metricInfoMatch.Groups[2].Value;
-                            currentMetricType = Enum.Parse<MetricTypes>(metricInfoMatch.Groups[3].Value,ignoreCase: true);
+                            currentMetricType = Enum.Parse<MetricTypes>(metricInfoMatch.Groups[3].Value, ignoreCase: true);
                             break;
                     }
-                    
+
                     wasReadingMeasurements = false;
                 }
                 else
                 {
-                    if(currentMetricType != MetricTypes.Gauge)
+                    if (currentMetricType != MetricTypes.Gauge)
                     {
                         Console.WriteLine("Current metric type is not a gauge, ignoring.");
                     }
@@ -97,6 +102,12 @@ namespace Promitor.Parsers.Prometheus.Core
                 }
 
                 line = await streamReader.ReadLineAsync();
+            } while (rawMetricsStream.Position <= rawMetricsStream.Length && string.IsNullOrWhiteSpace(line) == false);
+
+            // Add the unfinished guage if it wasn't added yet.
+            if(metrics.Find(f => f.Name == unfinishedGauge.Name) == null)
+            {
+                metrics.Add(unfinishedGauge);
             }
 
             return metrics;
