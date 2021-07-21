@@ -11,7 +11,7 @@ namespace Promitor.Parsers.Prometheus.Core
     public class PrometheusMetricsParser
     {
         const string MetricInfoRegex = @"# (\w+) (\w*) (.*)";
-        const string MeasurementRegex = @"(.+){(.*)} (-?\d+(?:\.\d*)*) (\d*)";
+        const string MeasurementRegex = @"(.+){(.*)} ((?:-?\d+(?:\.\d*)*)*(?:NaN)*) (\d*)";
 
         public static async Task<List<IMetric>> ParseAsync(Stream rawMetricsStream)
         {
