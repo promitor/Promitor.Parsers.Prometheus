@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Authors>Promitor</Authors>
+    <Authors>Promitor,Tom Kerkhove</Authors>
     <Company>Promitor</Company>
     <PackageLicenseFile></PackageLicenseFile>
     <PackageProjectUrl>https://promitor.io/</PackageProjectUrl>
