@@ -16,3 +16,10 @@ Easily parse raw metrics from a stream to concrete types:
 ```csharp
 var metrics = await PrometheusMetricsParser.ParseAsync(rawMetricsStream);
 ```
+
+Easily parse raw metrics from an HTTP response to concrete types:
+
+```csharp
+HttpResponseMessage httpResponse = await httpClient.GetAsync("/scrape");
+var metrics = await httpResponse.ReadAsPrometheusMetricsAsync(rawMetricsStream);
+```
