@@ -6,11 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Samples\raw-metrics.txt" />
+    <None Remove="Samples\raw-metrics-with-labels.txt" />
+    <None Remove="Samples\raw-metrics-without-labels.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Samples\raw-metrics.txt">
+    <Content Include="Samples\raw-metrics-without-labels.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\raw-metrics-with-labels.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

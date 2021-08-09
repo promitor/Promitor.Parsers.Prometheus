@@ -1,0 +1,24 @@
+﻿# HELP promitor_runtime_dotnet_totalmemory Total known allocated memory
+# TYPE promitor_runtime_dotnet_totalmemory gauge
+promitor_runtime_dotnet_totalmemory 52977208
+# HELP promitor_runtime_process_cpu_seconds_total Total user and system CPU time spent in seconds
+# TYPE promitor_runtime_process_cpu_seconds_total counter
+promitor_runtime_process_cpu_seconds_total 10.33
+# HELP promitor_runtime_process_virtual_bytes Process virtual memory size
+# TYPE promitor_runtime_process_virtual_bytes gauge
+promitor_runtime_process_virtual_bytes 18348056576
+# HELP promitor_runtime_process_working_set Process working set
+# TYPE promitor_runtime_process_working_set gauge
+promitor_runtime_process_working_set 217669632
+# HELP promitor_runtime_process_private_bytes Process private memory size
+# TYPE promitor_runtime_process_private_bytes gauge
+promitor_runtime_process_private_bytes 211578880
+# HELP promitor_runtime_process_num_threads Total number of threads
+# TYPE promitor_runtime_process_num_threads gauge
+promitor_runtime_process_num_threads 37
+# HELP promitor_runtime_process_processid Process ID
+# TYPE promitor_runtime_process_processid gauge
+promitor_runtime_process_processid 28
+# HELP promitor_runtime_process_start_time_seconds Start time of the process since unix epoch in seconds
+# TYPE promitor_runtime_process_start_time_seconds gauge
+promitor_runtime_process_start_time_seconds 1628486652
