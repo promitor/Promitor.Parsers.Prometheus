@@ -3,6 +3,7 @@ using Promitor.Parsers.Prometheus.Core.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace Promitor.Parsers.Prometheus.Core
     public class PrometheusMetricsParser
     {
         const string MetricInfoRegex = @"# (\w+) (\w*) (.*)";
-        const string MeasurementRegex = @"(.+){(.*)} ((?:-?\d+(?:\.\d*)*)*(?:NaN)*) (\d*)";
+        const string MeasurementRegex = "([^{\\ ]+)({.+})* ((?:-?\\d+(?:\\.\\d*)*)*(?:NaN)*)+ *(\\d*)*";
 
         public static async Task<List<IMetric>> ParseAsync(Stream rawMetricsStream)
         {
@@ -119,7 +120,7 @@ namespace Promitor.Parsers.Prometheus.Core
             var regexOutcome = Regex.Match(line, MeasurementRegex);
             if (regexOutcome.Success == false)
             {
-                throw new Exception($"Measurement doesn't follow the required Regex statement ({MeasurementRegex})");
+                throw new Exception($"Measurement doesn't follow the required Regex statement '{MeasurementRegex}' for entry '{line}'");
             }
 
             // Assign value
@@ -136,31 +137,43 @@ namespace Promitor.Parsers.Prometheus.Core
 
         private static double ParseMetricValue(Match regexOutcome)
         {
-            if (regexOutcome.Groups.Count < 4 || regexOutcome.Groups[3].Value == null)
+            var rawMetricValue = regexOutcome.Groups[3].Captures.FirstOrDefault()?.Value;
+            if (regexOutcome.Groups.Count < 4 || string.IsNullOrWhiteSpace(rawMetricValue))
             {
                 throw new Exception("No metric value was found");
             }
-
-            return double.Parse(regexOutcome.Groups[3].Value);
+            
+            return double.Parse(rawMetricValue);
         }
 
         private static DateTimeOffset? ParseMetricTimestamp(Match regexOutcome)
-        {            
-            if (regexOutcome.Groups.Count < 5 || regexOutcome.Groups[4].Value == null)
+        {
+            var rawUnixTimeInSeconds = regexOutcome.Groups[4].Captures.FirstOrDefault()?.Value;
+            if (regexOutcome.Groups.Count < 5 || string.IsNullOrWhiteSpace(rawUnixTimeInSeconds))
             {
                 return null;
             }
 
-            var unixTimeInSeconds = long.Parse(regexOutcome.Groups[4].Value);
+            var unixTimeInSeconds = long.Parse(rawUnixTimeInSeconds);
             return DateTimeOffset.FromUnixTimeMilliseconds(unixTimeInSeconds);
         }
 
         private static void ParseMetricLabels(Match regexOutcome, GaugeMeasurement measurement)
         {
-            var labels = regexOutcome.Groups[2].Value;
+            var rawLabels = regexOutcome.Groups[2].Value;
             
+            // When there are no labels, return
+            if (string.IsNullOrWhiteSpace(rawLabels))
+            {
+                return;
+            }
+
+            // Our capture group includes the leading { and trailing }, so we have to remove it
+            rawLabels = rawLabels.Remove(0, 1);
+            rawLabels = rawLabels.Remove(rawLabels.Length - 1);
+
             // Get every individual raw label
-            foreach (var rawLabel in labels.Split(','))
+            foreach (var rawLabel in rawLabels.Split(','))
             {
                 // Split label into information
                 var splitLabelInfo = rawLabel.Split('=');

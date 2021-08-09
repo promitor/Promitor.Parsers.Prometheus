@@ -183,3 +183,8 @@ azure_storage_account_capacity_discovery{tenant_id="c8819874-9e56-4e3f-b1a8-1c03
 azure_storage_account_capacity_discovery{tenant_id="c8819874-9e56-4e3f-b1a8-1c0325138f27",subscription_id="0f9d7fea-99e8-4768-8672-06a28514f77e",resource_uri="subscriptions/0f9d7fea-99e8-4768-8672-06a28514f77e/resourceGroups/azure-deprecation/providers/Microsoft.Storage/storageAccounts/storageaccountazure8896",resource_group="azure-deprecation",instance_name="storageaccountazure8896",geo="china",environment="dev"} 6604977 1626853387756
 azure_storage_account_capacity_discovery{tenant_id="c8819874-9e56-4e3f-b1a8-1c0325138f27",subscription_id="0f9d7fea-99e8-4768-8672-06a28514f77e",resource_uri="subscriptions/0f9d7fea-99e8-4768-8672-06a28514f77e/resourceGroups/promitor-sources/providers/Microsoft.Storage/storageAccounts/promitordatalake",resource_group="promitor-sources",instance_name="promitordatalake",geo="china",environment="dev"} 6768488 1626853388206
 azure_storage_account_capacity_discovery{tenant_id="c8819874-9e56-4e3f-b1a8-1c0325138f27",subscription_id="0f9d7fea-99e8-4768-8672-06a28514f77e",resource_uri="subscriptions/0f9d7fea-99e8-4768-8672-06a28514f77e/resourceGroups/azure-deprecation/providers/Microsoft.Storage/storageAccounts/storageaccountazurea0a1",resource_group="azure-deprecation",instance_name="storageaccountazurea0a1",geo="china",environment="dev"} NaN 1626853387766
+# HELP promitor_runtime_dotnet_collection_count_total GC collection count
+# TYPE promitor_runtime_dotnet_collection_count_total counter
+promitor_runtime_dotnet_collection_count_total{generation="0"} 1
+promitor_runtime_dotnet_collection_count_total{generation="1"} 0
+promitor_runtime_dotnet_collection_count_total{generation="2"} 0
