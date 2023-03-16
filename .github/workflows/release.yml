@@ -31,33 +31,33 @@ jobs:
         find: 'v'
         replace: ''
     - name: Set version for release trigger
-      uses: allenevans/set-env@v2.1.0
+      uses: allenevans/set-env@v2.2.0
       if: ${{ github.event_name == 'release' }}
       with:
         NUGET_VERSION: ${{ steps.releasetag.outputs.value }}
     - name: Set version for workflow dispatch
-      uses: allenevans/set-env@v2.1.0
+      uses: allenevans/set-env@v2.2.0
       if: ${{ github.event_name == 'workflow_dispatch' }}
       with:
         NUGET_VERSION: ${{ github.event.inputs.version }}
       # Set NuGet package name since env.NUGET_CORE_PACKAGE_NAME doesn't resolve the variables
     - name: Set NuGet package name (Core)
-      uses: allenevans/set-env@v2.1.0
+      uses: allenevans/set-env@v2.2.0
       with:
         NUGET_CORE_PACKAGE_NAME: Promitor.Parsers.Prometheus.Core.${{ env.NUGET_VERSION }}.nupkg
       # Set NuGet package name since env.NUGET_CORE_PACKAGE_PATH doesn't resolve the variables
     - name: Set NuGet package path (Core)
-      uses: allenevans/set-env@v2.1.0
+      uses: allenevans/set-env@v2.2.0
       with:
         NUGET_CORE_PACKAGE_PATH: ./src/Promitor.Parsers.Prometheus.Core/bin/Release/${{ env.NUGET_CORE_PACKAGE_NAME }}
       # Set NuGet package name since env.NUGET_HTTP_PACKAGE_NAME doesn't resolve the variables
     - name: Set NuGet package name (HTTP)
-      uses: allenevans/set-env@v2.1.0
+      uses: allenevans/set-env@v2.2.0
       with:
         NUGET_HTTP_PACKAGE_NAME: Promitor.Parsers.Prometheus.Http.${{ env.NUGET_VERSION }}.nupkg
       # Set NuGet package name since env.NUGET_HTTP_PACKAGE_PATH doesn't resolve the variables
     - name: Set NuGet package path (HTTP)
-      uses: allenevans/set-env@v2.1.0
+      uses: allenevans/set-env@v2.2.0
       with:
         NUGET_HTTP_PACKAGE_PATH: ./src/Promitor.Parsers.Prometheus.Http/bin/Release/${{ env.NUGET_HTTP_PACKAGE_NAME }}
     - name: Build Solution
