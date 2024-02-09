@@ -23,7 +23,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Get version from release tag
-      uses: mad9000/actions-find-and-replace-string@1
+      uses: mad9000/actions-find-and-replace-string@5
       if: ${{ github.event_name == 'release' }}
       id: releasetag
       with:
